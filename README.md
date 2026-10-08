@@ -1,0 +1,2 @@
+# WallpaperSwitchtray
+一个壁纸切换软件,允许你在两个不同时段使用两套不同的壁纸
