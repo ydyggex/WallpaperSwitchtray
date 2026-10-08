@@ -1,0 +1,2 @@
+# Build-time only. The application itself imports nothing outside the stdlib.
+pyinstaller>=6.0
