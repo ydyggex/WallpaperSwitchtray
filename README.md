@@ -22,7 +22,6 @@ Random desktop wallpaper switcher for Windows — day/night schedules, native sl
 
 ## 截图 Screenshots
 
-> 把窗口截图放到 `docs/` 目录并在此引用,例如:
 > ![main window](docs/png.png)
 
 ## 快速开始 Quick Start
