@@ -1492,9 +1492,22 @@ class App:
                 self._bag[i], self._bag[j] = self._bag[j], self._bag[i]
         cand = images[self._bag.pop()]
         # 缺陷14：避免重启后立即重复上一张——若抽到上次用过的，换一张。
-        if len(images) > 1 and cand.name == self._last_used.get(key) and self._bag:
-            self._bag.insert(0, images.index(cand))
-            cand = images[self._bag.pop()]
+        if len(images) > 1 and cand.name == self._last_used.get(key):
+            if self._bag:
+                self._bag.insert(0, images.index(cand))
+                cand = images[self._bag.pop()]
+            else:
+                # 袋空且唯一候选就是上一张：重洗至多 5 次取非重复项，仍失败才接受重复。
+                for _ in range(5):
+                    bag = list(range(len(images)))
+                    for i in range(len(bag) - 1, 0, -1):
+                        j = _rand_below(i + 1)
+                        bag[i], bag[j] = bag[j], bag[i]
+                    pick = images[bag.pop()]
+                    if pick.name != self._last_used.get(key):
+                        self._bag = bag          # 续用剩余袋，保持一轮不重复
+                        cand = pick
+                        break
         return cand
 
     def _apply_switch(self, seq, name, folder, images):
